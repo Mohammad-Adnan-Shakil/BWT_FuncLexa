@@ -66,4 +66,8 @@ Adaptive learning models
 
 Real-time financial advisory engine
 
+## 🏗 System Architecture
+
+![Architecture Diagram](architecture.png)
+
 Advanced predictive analytics
