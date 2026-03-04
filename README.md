@@ -1,5 +1,5 @@
 💡 AI Financial Clarity Companion
-Team: Funk Alexa
+Team: FuncLexa
 🚀 Problem Statement
 
 Most individuals earning modest incomes make major financial decisions without structured financial insight. Existing financial tools are often built for financially literate users and fail to provide simple, actionable clarity for everyday earners.
