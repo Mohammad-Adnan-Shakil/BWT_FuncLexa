@@ -63,16 +63,16 @@ const FinancialInput = ({ onSubmit, darkMode = false }) => {
       <div className={wrapperClass}>
         <div className="bg-gradient-to-r from-blue-600 to-teal-500 px-8 py-10">
           <h2 className="text-3xl font-bold text-white mb-2">Financial Input</h2>
-          <p className="text-blue-100 text-lg">Provide your values to generate projection and risk analysis.</p>
+          <p className="text-blue-100 text-lg">Provide your values in INR (₹) to generate projection and risk analysis.</p>
         </div>
 
         <form onSubmit={handleSubmit} className={`p-8 space-y-6 ${cardClass}`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
-              { label: 'Monthly Income', name: 'monthlyIncome', placeholder: '3000' },
-              { label: 'Monthly Expenses', name: 'monthlyExpenses', placeholder: '2500' },
-              { label: 'Current Savings', name: 'currentSavings', placeholder: '5000' },
-              { label: 'Planned Major Expense', name: 'plannedExpense', placeholder: '1000' },
+              { label: 'Monthly Income (₹)', name: 'monthlyIncome', placeholder: '300000' },
+              { label: 'Monthly Expenses (₹)', name: 'monthlyExpenses', placeholder: '180000' },
+              { label: 'Current Savings (₹)', name: 'currentSavings', placeholder: '500000' },
+              { label: 'Planned Major Expense (₹)', name: 'plannedExpense', placeholder: '120000' },
             ].map((field) => (
               <div key={field.name}>
                 <label className={labelClass}>{field.label}</label>

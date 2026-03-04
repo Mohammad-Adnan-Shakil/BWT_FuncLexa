@@ -85,6 +85,24 @@ function App() {
     ? 'relative z-10 bg-slate-900/80 backdrop-blur-lg border-b border-slate-700'
     : 'relative z-10 bg-white/80 backdrop-blur-lg border-b border-white/20';
 
+  const testimonials = [
+    {
+      quote: '"I stopped making emotional purchases and saved more in 3 months."',
+      name: 'Aman Adnan Sharyanaya',
+      role: 'Early User',
+    },
+    {
+      quote: '"The clarity score helped me plan with confidence."',
+      name: 'Priya Sharma',
+      role: 'Freelancer',
+    },
+    {
+      quote: '"Simple inputs, powerful output. Perfect for monthly planning."',
+      name: 'Neeraj Verma',
+      role: 'Product Manager',
+    },
+  ];
+
   return (
     <div className={shellClass}>
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -97,9 +115,17 @@ function App() {
           <div className="flex justify-between items-center h-20">
             <button onClick={() => setCurrentView('input')} className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl">C</span>
+                <span className="text-white font-bold text-xl">₹</span>
               </div>
-              <span className={`text-2xl font-bold ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>CentSight</span>
+              <span
+                className={`text-2xl font-bold bg-clip-text text-transparent ${
+                  darkMode
+                    ? 'bg-gradient-to-r from-cyan-300 via-blue-300 to-teal-300'
+                    : 'bg-gradient-to-r from-blue-700 via-indigo-600 to-teal-600'
+                }`}
+              >
+                CentSight
+              </span>
             </button>
 
             <div className="hidden md:flex items-center space-x-6">
@@ -140,8 +166,34 @@ function App() {
           <section className="mx-auto max-w-md">
             <div className={`rounded-3xl border p-8 shadow-2xl ${darkMode ? 'border-slate-700 bg-slate-900/80' : 'border-white/40 bg-white/80'}`}>
               <div className={`inline-flex rounded-xl p-1 mb-6 w-full ${darkMode ? 'bg-slate-800' : 'bg-slate-100'}`}>
-                <button onClick={() => setAuthMode('login')} className={`w-1/2 rounded-lg py-2 text-sm font-semibold ${authMode === 'login' ? 'bg-white text-slate-900 shadow' : darkMode ? 'text-slate-300' : 'text-slate-500'}`}>Login</button>
-                <button onClick={() => setAuthMode('signup')} className={`w-1/2 rounded-lg py-2 text-sm font-semibold ${authMode === 'signup' ? 'bg-white text-slate-900 shadow' : darkMode ? 'text-slate-300' : 'text-slate-500'}`}>Sign Up</button>
+                <button
+                  onClick={() => setAuthMode('login')}
+                  className={`w-1/2 rounded-lg py-2 text-sm font-semibold ${
+                    authMode === 'login'
+                      ? darkMode
+                        ? 'bg-slate-200 text-slate-900 shadow'
+                        : 'bg-white text-slate-900 shadow'
+                      : darkMode
+                        ? 'text-slate-300'
+                        : 'text-slate-500'
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => setAuthMode('signup')}
+                  className={`w-1/2 rounded-lg py-2 text-sm font-semibold ${
+                    authMode === 'signup'
+                      ? darkMode
+                        ? 'bg-slate-200 text-slate-900 shadow'
+                        : 'bg-white text-slate-900 shadow'
+                      : darkMode
+                        ? 'text-slate-300'
+                        : 'text-slate-500'
+                  }`}
+                >
+                  Sign Up
+                </button>
               </div>
               <h2 className={`text-3xl font-bold ${darkMode ? 'text-slate-100' : 'text-slate-900'}`}>{authMode === 'login' ? 'Welcome back' : 'Create your account'}</h2>
               <p className={`${darkMode ? 'text-slate-400' : 'text-slate-500'} mt-2 mb-6`}>{authMode === 'login' ? 'Access your financial insights.' : 'Start your financial clarity journey.'}</p>
@@ -165,6 +217,9 @@ function App() {
                 Know Your Financial Future
                 <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-500">Before You Spend</span>
               </h1>
+              <p className={`${darkMode ? 'text-slate-300' : 'text-slate-600'} text-sm font-medium`}>
+                All calculations are displayed in INR (₹).
+              </p>
             </section>
 
             <FinancialInput onSubmit={handleSubmit} darkMode={darkMode} />
@@ -195,14 +250,11 @@ function App() {
             </section>
 
             <section id="testimonials" className="mt-14 grid gap-6 md:grid-cols-3">
-              {[
-                '"I stopped making emotional purchases and saved more in 3 months."',
-                '"The clarity score helped me plan with confidence."',
-                '"Simple inputs, powerful output. Perfect for monthly planning."',
-              ].map((quote, idx) => (
-                <div key={idx} className={`rounded-2xl border p-6 ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white/80 border-slate-200'}`}>
-                  <p className={darkMode ? 'text-slate-200' : 'text-slate-700'}>{quote}</p>
-                  <p className={`mt-4 text-sm font-semibold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>CentSight User</p>
+              {testimonials.map((item) => (
+                <div key={item.name} className={`rounded-2xl border p-6 ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white/80 border-slate-200'}`}>
+                  <p className={darkMode ? 'text-slate-200' : 'text-slate-700'}>{item.quote}</p>
+                  <p className={`mt-4 text-sm font-semibold ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>{item.name}</p>
+                  <p className={`text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>{item.role}</p>
                 </div>
               ))}
             </section>
