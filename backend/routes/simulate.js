@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const { exec } = require("child_process");
 
-const Simulation = require("../models/Simulation");
-
-router.post("/simulate", async (req, res) => {
-
+const Simulation = require("../models/simulation");
+const auth = require("../middleware/auth");
+router.post("/simulate", auth, async (req, res) => {
     // safety check
     if (!req.body) {
         return res.status(400).json({ error: "No data received" });
@@ -38,6 +37,7 @@ router.post("/simulate", async (req, res) => {
         }
 
         const prediction = parseFloat(stdout);
+        const growth = prediction - current_savings;
 
 // Financial AI insight logic
 let financial_health = "Stable";
@@ -55,18 +55,20 @@ else if (prediction < 120000) {
         try {
 
             const newSimulation = new Simulation({
-                income,
-                expenses,
-                current_savings,
-                planned_expense,
-                time_horizon,
-                predicted_savings: prediction
-            });
+    user: req.userId,
+    income,
+    expenses,
+    current_savings,
+    planned_expense,
+    time_horizon,
+    predicted_savings: prediction
+});
 
             await newSimulation.save();
 
             res.json({
     predicted_savings: prediction,
+    growth,
     financial_health,
     insight
 });
