@@ -4,8 +4,13 @@ import joblib
 import numpy as np
 import sys
 
-model = joblib.load("model.pkl")
+import os
+import joblib
 
+base_dir = os.path.dirname(__file__)
+model_path = os.path.join(base_dir, "model.pkl")
+
+model = joblib.load(model_path)
 income = float(sys.argv[1])
 expenses = float(sys.argv[2])
 current_savings = float(sys.argv[3])
