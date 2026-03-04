@@ -4,8 +4,7 @@ const { exec } = require("child_process");
 
 const Simulation = require("../models/simulation");
 const auth = require("../middleware/auth");
-router.post("/simulate", auth, async (req, res) => {
-    // safety check
+router.post("/simulate", auth, async (req, res, next) => {    // safety check
     if (!req.body) {
         return res.status(400).json({ error: "No data received" });
     }
