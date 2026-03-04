@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import jsPDF from 'jspdf';
 
-const ResultDashboard = ({ data, onNewCheck, darkMode = false }) => {
+const ResultDashboard = ({ data, recentTrack = [], onNewCheck, darkMode = false }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
   const formatCurrency = (amount) =>
@@ -310,6 +310,54 @@ const ResultDashboard = ({ data, onNewCheck, darkMode = false }) => {
             )}
           </svg>
         </div>
+      </section>
+
+      <section className={`rounded-2xl border p-6 shadow-xl ${panelClass}`}>
+        <div className="mb-4 flex items-center justify-between">
+          <h3 className="text-xl font-bold">Recent Track</h3>
+          <p className={`text-sm ${mutedTextClass}`}>Last {Math.min(recentTrack.length, 8)} simulations</p>
+        </div>
+
+        {recentTrack.length === 0 ? (
+          <p className={`text-sm ${mutedTextClass}`}>No recent values yet. Run your first analysis.</p>
+        ) : (
+          <div className={`overflow-x-auto rounded-xl border ${softBgClass}`}>
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className={darkMode ? 'border-b border-slate-700 bg-slate-800/60' : 'border-b border-slate-200 bg-slate-100/70'}>
+                  <th className="px-4 py-3 text-left font-semibold">Time</th>
+                  <th className="px-4 py-3 text-right font-semibold">Income</th>
+                  <th className="px-4 py-3 text-right font-semibold">Expense</th>
+                  <th className="px-4 py-3 text-right font-semibold">Planned</th>
+                  <th className="px-4 py-3 text-right font-semibold">Projected</th>
+                  <th className="px-4 py-3 text-left font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentTrack.map((item) => (
+                  <tr key={item.id} className={darkMode ? 'border-b border-slate-800' : 'border-b border-slate-100'}>
+                    <td className={`px-4 py-3 ${mutedTextClass}`}>{new Date(item.createdAt).toLocaleString()}</td>
+                    <td className="px-4 py-3 text-right font-medium">{formatCurrency(item.monthlyIncome)}</td>
+                    <td className="px-4 py-3 text-right font-medium">{formatCurrency(item.monthlyExpenses)}</td>
+                    <td className="px-4 py-3 text-right font-medium">{formatCurrency(item.plannedExpense)}</td>
+                    <td className="px-4 py-3 text-right font-semibold">{formatCurrency(item.projectedSavings)}</td>
+                    <td className="px-4 py-3">
+                      <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${
+                        item.stability === 'Stable'
+                          ? 'bg-emerald-100 text-emerald-700'
+                          : item.stability === 'Moderate'
+                            ? 'bg-amber-100 text-amber-700'
+                            : 'bg-rose-100 text-rose-700'
+                      }`}>
+                        {item.stability}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
 
       <section className="flex flex-col items-center justify-center gap-4 pt-1 sm:flex-row">

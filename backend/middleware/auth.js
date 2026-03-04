@@ -4,7 +4,9 @@ const SECRET = "centsight_secret";
 
 module.exports = function (req, res, next) {
 
-    const token = req.headers.authorization;
+    const headerValue = req.headers.authorization || "";
+    const raw = Array.isArray(headerValue) ? headerValue[0] : headerValue;
+    const token = String(raw).replace(/^Bearer\s+/i, "").trim();
 
     if (!token) return res.status(401).json({ error: "No token" });
 
