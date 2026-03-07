@@ -3,7 +3,11 @@ import jsPDF from 'jspdf';
 import FinancialInput from './components/FinancialInput';
 import ResultDashboard from './components/ResultDashboard';
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+const DEFAULT_API_BASE =
+  process.env.NODE_ENV === 'production'
+    ? 'https://centsight-backend.onrender.com/api'
+    : 'http://localhost:5000/api';
+const API_BASE = (process.env.REACT_APP_API_BASE || DEFAULT_API_BASE).replace(/\/$/, '');
 const getUserIdFromToken = (token) => {
   try {
     if (!token) return '';
@@ -506,7 +510,7 @@ function App() {
         /failed to fetch|networkerror|connection refused|err_connection_refused/i.test(msg);
 
       if (networkFailure) {
-        setAuthError(`Cannot connect to backend (${API_BASE}). Start backend: cd backend && npm run start`);
+        setAuthError(`Cannot connect to backend (${API_BASE}). Check REACT_APP_API_BASE and backend status.`);
       } else {
         setAuthError(msg || 'Authentication failed');
       }

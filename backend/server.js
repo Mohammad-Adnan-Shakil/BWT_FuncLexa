@@ -10,10 +10,29 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI =
     process.env.MONGO_URI ||
-    "mongodb+srv://CentSight_db_user:bH1J9na7g29fVuo7@centsight-server.9fjskud.mongodb.net/?appName=CentSight-server";
+    (process.env.NODE_ENV !== "production"
+        ? "mongodb+srv://CentSight_db_user:bH1J9na7g29fVuo7@centsight-server.9fjskud.mongodb.net/?appName=CentSight-server"
+        : "");
+const corsOrigins = (process.env.CORS_ORIGIN || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+if (!MONGO_URI) {
+    throw new Error("Missing MONGO_URI environment variable");
+}
 
 // Middleware
-app.use(cors());
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin || corsOrigins.length === 0 || corsOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+            return callback(new Error("Not allowed by CORS"));
+        }
+    })
+);
 app.use(express.json());
 
 // Routes
