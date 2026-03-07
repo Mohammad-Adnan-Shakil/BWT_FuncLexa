@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const SECRET = "centsight_secret";
+const SECRET = process.env.JWT_SECRET || "centsight_secret";
 
 module.exports = function (req, res, next) {
 

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
-const SECRET = "centsight_secret";
+const SECRET = process.env.JWT_SECRET || "centsight_secret";
 
 
 // ==========================
