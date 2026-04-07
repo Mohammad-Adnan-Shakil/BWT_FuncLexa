@@ -1,164 +1,87 @@
-💰 CentSight — AI Financial Decision Simulator
+# 💰 CentSight — AI Financial Decision Simulator
 
-🚀 CentSight is an AI-powered financial decision support platform that helps users simulate future financial scenarios before making spending decisions.
+> Predict your financial future before making spending decisions — powered by Machine Learning.
 
-Instead of guessing “Can I afford this?”, CentSight predicts your future savings trajectory using Machine Learning and gives actionable financial insights.
-
----
-
-🧠 Problem Statement
-
-People often make financial decisions without understanding the long-term impact of their spending habits.
-
-Questions like:
-
-- Should I buy this expensive gadget?
-- Will this affect my savings in the future?
-- Am I financially healthy?
-
-are rarely backed by data.
-
-CentSight solves this by providing AI-driven financial simulations.
+🌐 **Live Demo:** [Add your Render URL here]  
+📂 **Repo:** [github.com/Mohammad-Adnan-Shakil/centsight](https://github.com/Mohammad-Adnan-Shakil/BWT_FuncLexa)
 
 ---
 
-✨ Key Features
-
-🔐 User Authentication
-
-- Secure signup and login
-- Password hashing using bcrypt
-- JWT based authentication
-
-📊 Financial Scenario Simulation
-
-- Users input:
-  - Income
-  - Expenses
-  - Current Savings
-  - Planned Expense
-  - Time Horizon
-
-🧠 Machine Learning Predictions
-
-- Linear Regression model predicts future savings
-- Python ML model integrated with Node.js backend
-
-📈 Financial Insights Engine
-
-- Predicted savings
-- Growth analysis
-- Financial health classification
-- Risk score generation
-
-💾 Simulation History
-
-- All simulations are stored in MongoDB
+![CentSight Demo](./screenshot.png)
+<!-- Replace with an actual screenshot or GIF of the app -->
 
 ---
 
-🏗️ System Architecture
+## 🧠 What is CentSight?
 
-User → Frontend → Node.js API → Python ML Model → Prediction → Database → Insights
+People make financial decisions every day without understanding the long-term impact. Questions like:
 
-Tech flow:
+- *Should I buy this gadget?*
+- *Will this expense affect my savings in 6 months?*
+- *Am I financially stable?*
 
-React → Express API → Python ML Script → MongoDB Storage
-
----
-
-⚙️ Tech Stack
-
-Frontend
-
-⚛️ React
-🎨 Tailwind CSS
-
-Backend
-
-🟢 Node.js
-🚂 Express.js
-🔑 JWT Authentication
-🔒 bcrypt Password Hashing
-
-Machine Learning
-
-🐍 Python
-📊 Scikit-learn
-📦 Joblib
-
-Database
-
-🍃 MongoDB
+CentSight answers these using a **Linear Regression ML model** that predicts your future savings trajectory and classifies your financial health — before you spend.
 
 ---
 
-🧠 Machine Learning Model
+## ✨ Features
 
-The prediction model uses Linear Regression trained on financial data with the following inputs:
-
-- income
-- expenses
-- current_savings
-- planned_expense
-- time_horizon
-
-The model predicts:
-
-future_savings
-
-This prediction powers the financial simulation.
+| Feature | Description |
+|---|---|
+| 🔐 Authentication | Secure signup/login with JWT + bcrypt |
+| 📊 Simulation Engine | Input income, expenses, savings, planned spend → get ML prediction |
+| 🤖 ML Predictions | Python (Scikit-learn) model integrated with Node.js backend |
+| 📈 Financial Health | Risk score + health classification (Stable / Moderate / Risky) |
+| 💾 Simulation History | All past simulations stored in MongoDB |
 
 ---
 
-📊 Financial Health Logic
+## 🏗️ Architecture
 
-CentSight evaluates financial stability using:
+```
+React Frontend → Express API → Python ML Model → MongoDB
+```
 
-Risk Score
-
-Factors include:
-
-- High expense ratio
-- Low current savings
-- Low predicted savings
-
-Health Categories
-
-🟢 Stable
-🟡 Moderate
-🔴 Risky
-
-Each simulation returns a personalized insight message.
+```
+User submits financial data
+        ↓
+Node.js validates & routes request
+        ↓
+Python ML script runs prediction (Scikit-learn)
+        ↓
+Node.js stores result in MongoDB
+        ↓
+Frontend displays prediction + financial health insight
+```
 
 ---
 
-🔐 API Endpoints
+## ⚙️ Tech Stack
 
-Authentication
-
-Signup
-
-POST "/api/auth/signup"
-
-Login
-
-POST "/api/auth/login"
-
-Returns:
-
-JWT Token
+**Frontend:** React, Tailwind CSS  
+**Backend:** Node.js, Express.js, JWT, bcrypt  
+**ML:** Python, Scikit-learn, Joblib  
+**Database:** MongoDB  
 
 ---
 
-Financial Simulation
+## 🔐 API Reference
 
-POST "/api/simulate"
+### Auth
 
-Protected route (requires JWT)
+```
+POST /api/auth/signup
+POST /api/auth/login        → returns JWT token
+```
 
-Example request:
+### Simulation (protected — requires JWT)
 
+```
+POST /api/simulate
+```
+
+**Request:**
+```json
 {
   "income": 80000,
   "expenses": 30000,
@@ -166,9 +89,10 @@ Example request:
   "planned_expense": 20000,
   "time_horizon": 12
 }
+```
 
-Response:
-
+**Response:**
+```json
 {
   "predicted_savings": 170762.33,
   "growth": 120762.33,
@@ -176,92 +100,74 @@ Response:
   "risk_score": 40,
   "insight": "Your savings trajectory looks healthy."
 }
+```
 
 ---
 
-📂 Project Structure
+## 🚀 Run Locally
 
-BWT_FuncLexa
-│
-├── backend
-│   ├── middleware
-│   │   └── auth.js
-│   ├── models
+```bash
+# 1. Clone
+git clone https://github.com/Mohammad-Adnan-Shakil/BWT_FuncLexa.git
+cd BWT_FuncLexa
+
+# 2. Backend
+cd backend
+npm install
+node server.js        # runs on http://localhost:5000
+
+# 3. ML dependencies
+pip install numpy pandas scikit-learn joblib
+
+# 4. Frontend
+cd ../centsight-client
+npm install
+npm start             # runs on http://localhost:3000
+```
+
+---
+
+## 📂 Project Structure
+
+```
+BWT_FuncLexa/
+├── backend/
+│   ├── middleware/auth.js
+│   ├── models/
 │   │   ├── user.js
 │   │   └── simulation.js
-│   ├── routes
+│   ├── routes/
 │   │   ├── auth.js
 │   │   └── simulate.js
-│   ├── server.js
-│   └── package.json
-│
-├── ml
+│   └── server.js
+├── ml/
 │   ├── train_model.py
 │   ├── predict.py
 │   └── model.pkl
-│
+├── centsight-client/    # React frontend
 └── README.md
+```
 
 ---
 
-🚀 How to Run the Project
+## 🎯 Planned Improvements
 
-1️⃣ Clone Repository
-
-git clone https://github.com/Mohammad-Adnan-Shakil/BWT_FuncLexa.git
-
----
-
-2️⃣ Install Backend Dependencies
-
-cd backend
-npm install
+- [ ] AI-driven recommendation engine
+- [ ] Spending pattern analysis
+- [ ] Investment forecasting
+- [ ] Advanced ML models (Random Forest, XGBoost)
+- [ ] Mobile responsive dashboard
 
 ---
 
-3️⃣ Install Python Dependencies
+## 🏆 Built For
 
-pip install numpy pandas scikit-learn joblib
-
----
-
-4️⃣ Run Backend Server
-
-node server.js
-
-Server will run on:
-
-http://localhost:5000
+**Build With TRAE Hackathon** — Theme: *Future Finance Innovation Platforms*
 
 ---
 
-🎯 Future Improvements
+## 👨‍💻 Author
 
-🔮 AI financial recommendation engine
-📊 Spending pattern analysis
-📱 Mobile responsive dashboard
-📈 Investment forecasting
-🤖 Advanced ML models for financial planning
-
----
-
-🏆 Hackathon Project
-
-Built for Build With TRAE Hackathon under the theme:
-
-Future Finance Innovation Platforms
-
-CentSight demonstrates how AI can assist everyday financial decision making.
-
----
-
-👨‍💻 Author
-
-Adnan Shakil
-
-Computer Science Engineering Student
-Full Stack + AI Developer
-
----
-
-⭐ If you like the project, feel free to star the repository!
+**Mohammad Adnan Shakil**  
+CS Engineering Student @ Presidency University, Bengaluru  
+[LinkedIn](https://linkedin.com/in/Mohammad-Adnan-Shakil) · [GitHub](https://github.com/Mohammad-Adnan-Shakil)
